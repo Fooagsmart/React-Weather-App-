@@ -1,4 +1,4 @@
-import React from 'react' 
+import React,{ useState } from 'react' 
 import './WeatherApp.css'
 import search_icon from '../Assets/search.png'
 import clear_icon from '../Assets/clear.png'
@@ -12,6 +12,8 @@ import humidity_icon from '../Assets/humidity.png'
 const WeatherApp = () => {
 
     let api_key ='88660bd17a340c76c1ee3eac23f0a15d';
+
+    const [wicon, setWicon] = useState(cloud_icon);
 
     const search = async () =>{
         const element = document.getElementsByClassName("cityInput")
@@ -32,6 +34,39 @@ const WeatherApp = () => {
         wind[0].innerHTML = data.wind.speed+' km/h';
         temperature[0].innerHTML = data.main.temp+'°c';
         location[0].innerHTML = data.name;
+
+        if(data.weather[0].icon==='01d' || data.weather[0].icon==='01n')
+        {
+            setWicon(clear_icon);
+        }
+        else if (data.weather[0].icon==='02d' || data.weather[0].icon==='02n')
+        {
+            setWicon(cloud_icon);
+        }
+        else if (data.weather[0].icon==='03d' || data.weather[0].icon==='03n')
+        {
+            setWicon(drizzle_icon);
+        }
+        else if (data.weather[0].icon==='04d' || data.weather[0].icon==='04n')
+        {
+            setWicon(drizzle_icon);
+        }
+        else if (data.weather[0].icon==='09d' || data.weather[0].icon==='09n')
+        {
+            setWicon(rain_icon);
+        }
+        else if (data.weather[0].icon==='10d' || data.weather[0].icon==='10n')
+        {
+            setWicon(rain_icon);
+        }
+        else if (data.weather[0].icon==='13d' || data.weather[0].icon==='13n')
+        {
+            setWicon(snow_icon);
+        }
+        else
+        {
+            setWicon(clear_icon);
+        }
     }
 
   return (
@@ -43,7 +78,7 @@ const WeatherApp = () => {
         </div>
       </div>
       <div className="weather-img">
-        <img src={cloud_icon} alt='' />
+        <img src={wicon} alt='' />
       </div>
       <div className="weather-temp">24°c</div>
       <div className="weather-location">London</div>
